@@ -22,15 +22,11 @@ jobs:
       - name: Create Automated Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: "v${{ github.run_number }}"
-          name: "VyMusic Build #${{ github.run_number }}"
-          body: "यह आपके नए एपीआई बाईपास (WEB_REMIX) के साथ स्वचालित रूप से बिल्ड किया गया एपीके है।"
           draft: true
           prerelease: true
           files: app/build/outputs/apk/debug/vyMusic.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 /*
 name: CI
 
