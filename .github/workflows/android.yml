@@ -1,39 +1,34 @@
-
 name: CI & Automated Release
 
 on:
   push:
     branches:
-      - main  # या आपके मुख्य ब्रांच का नाम (master / main)
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # यह लाइन गिठूब को रिलीज़ बनाने की कानूनी अनुमति देती है
-
+      contents: write
     steps:
       - uses: actions/checkout@v4
-
       - name: set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: "17"
           distribution: "temurin"
           cache: gradle
-
       - name: Build with Gradle
         run: ./gradlew assembleDebug
-
       - name: Create Automated Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: "v${{ github.run_number }}"
           name: "VyMusic Build #${{ github.run_number }}"
           body: "यह आपके नए एपीआई बाईपास (WEB_REMIX) के साथ स्वचालित रूप से बिल्ड किया गया एपीके है।"
-          draft: false
-          prerelease: false
-          files: app/build/outputs/apk/debug/app-debug.apk
+          draft: true
+          prerelease: true
+          files: app/build/outputs/apk/debug/vyMusic.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
